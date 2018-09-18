@@ -1,0 +1,78 @@
+
+<!-- Created by Ritesh Patni 
+Add these entries to broker.xml file to work with Pub-Sub model
+
+Use case is - Routing Messages With Wild Cards / Publish-Subscribe Messaging
+
+-->
+		<wildcard-addresses>
+			<enabled>true</enabled>
+			<delimiter>.</delimiter>
+			<any-words>#</any-words>
+			<single-word>*</single-word>
+		</wildcard-addresses>
+
+
+
+
+         <address name="DLQ">
+            <anycast>
+               <queue name="DLQ" />
+            </anycast>
+         </address>
+         <address name="ExpiryQueue">
+            <anycast>
+               <queue name="ExpiryQueue" />
+            </anycast>
+         </address>
+		 
+		 <!-- This will log messages only when there is single word after clog -->
+		 <address name="clog.*"> 
+			<multicast>
+				<queue name="CLOG.V1"/>
+			</multicast>
+		 </address>
+		 
+		 <!-- This will log messages only when there any words after clog -->
+		 
+		 <address name="clog.#">
+			<multicast>
+				<queue name="CLOG.V2"/>
+			</multicast>
+		 </address>
+		 
+		 <!-- This will log messages only when there is single word after clog.splunk -->
+		 <address name="clog.splunk.*">
+			<multicast>
+				<queue name="SPLUNK.V1"/>
+			</multicast>
+		 </address>
+		 
+		 
+		 <!-- This will log messages only when there is any words after clog.splunk -->
+		 <address name="clog.splunk.#">
+			<multicast>
+				<queue name="SPLUNK.V2"/>
+			</multicast>
+		 </address>
+		 
+		 <!-- Name of topic for enrichment usecase -->
+		 <address name="clog.splunk.req.enrichment">
+			<multicast>
+				<queue name="ISO.POC.ENRICHMENT"/>
+			</multicast>
+		 </address>
+		 
+		 <!-- Name of topic for largeMessage usecase -->
+		 <address name="clog.splunk.largeMessage">
+			<multicast>
+				<queue name="ISO.POC.LARGE.MESSAGE"/>
+			</multicast>
+		 </address>
+		 
+		 <!-- Name of topic for segmentation usecase -->
+		 <address name="clog.splunk.segmentation">
+			<multicast>
+				<queue name="ISO.POC.SEGMENTATION"/>
+			</multicast>
+		 </address>
