@@ -1,0 +1,4 @@
+org/mycompany/Application.class
+org/mycompany/ParseXMLtoObject.class
+org/mycompany/ConsumerRoute.class
+org/mycompany/JMSConfig.class
